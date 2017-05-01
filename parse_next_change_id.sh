@@ -3,6 +3,10 @@
 #NEXT_CHANGE_ID=$(cat next_change_id)
 NEXT_CHANGE_ID=$(curl http://api.poe.ninja/api/Data/GetStats | sed -n 's/.*"nextChangeId":"\(.*\)","api.*/\1/p')
 curl http://api.pathofexile.com/public-stash-tabs/?id=$NEXT_CHANGE_ID > stashtab-api.json
+if [ ! -r known_id_list ]
+then
+	touch known_id_list
+fi
 python parser.py
 
 while (true)
